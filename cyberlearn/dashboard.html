@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberLearn | Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-image: url('assets/images/8a64a84ca204cd4bc4f075371baa76192838cc82.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900 flex flex-col">
+
+<header class="bg-white/30 backdrop-blur-md border-b border-slate-200/70">
+    <div class="px-8 lg:px-12 py-4 flex items-center justify-between gap-6">
+        <a href="dashboard.html" class="flex items-center gap-2">
+            <img src="assets/images/logo.png" alt="CyberLearn Logo" class="h-20 w-auto">
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-900">
+            <a href="dashboard.html" class="text-slate-900">Dashboard</a>
+            <a href="lessons.html" class="hover:text-slate-900">Lessons</a>
+            <a href="#" data-nav-quiz class="hover:text-slate-900">Quiz</a>
+            <a href="resources.html" class="hover:text-slate-900">Resources</a>
+        </nav>
+        <div class="relative flex items-center gap-3" data-nav-container>
+            <a data-nav-auth href="index.html#auth" class="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white">Login</a>
+            <button type="button" data-nav-user class="hidden items-center justify-center rounded-full" aria-label="Account menu">
+                <img src="assets/images/account_logo.png" alt="Account" class="h-16 w-16">
+            </button>
+            <div data-nav-menu class="absolute right-0 top-12 hidden w-52 rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl">
+                <p class="text-xs font-medium text-slate-900 mb-2">Signed in as</p>
+                <p data-nav-user-name class="text-sm font-semibold text-slate-900">Your account</p>
+                <p data-nav-user-email class="text-xs text-slate-900 mb-3">email@example.com</p>
+                <a href="dashboard.html" class="block rounded-xl bg-slate-900 px-4 py-2 text-center text-sm font-semibold text-white mb-2">Dashboard</a>
+                <button type="button" data-nav-logout class="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-50">Log out</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="flex-1 max-w-6xl mx-auto w-full px-6 py-12 lg:py-16">
+    <div class="grid gap-8">
+        <!-- Lessons Card -->
+        <div class="rounded-3xl bg-white border border-slate-200 p-12 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between gap-8">
+                <div class="flex items-start gap-8">
+                    <img src="assets/images/Lessonpngdash.png" alt="Lessons" class="w-44 h-36 object-contain flex-shrink-0">
+                    <div class="flex-1">
+                        <h3 class="text-3xl font-semibold text-slate-900">Lessons</h3>
+                        <p class="mt-3 text-base text-slate-900">Your learning journey starts here. Work through lessons at your own pace and build a strong foundation before moving on to the quiz.</p>
+                    </div>
+                </div>
+                <a href="lessons.html" class="inline-flex items-center gap-2 rounded-full bg-slate-600 hover:bg-slate-700 px-8 py-4 text-base font-semibold text-white transition flex-shrink-0">
+                    Get Started →
+                </a>
+            </div>
+        </div>
+
+        <!-- Quiz Card -->
+        <div class="rounded-3xl bg-white border border-slate-200 p-12 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between gap-8">
+                <div class="flex items-start gap-8">
+                    <img src="assets/images/quizpngdash.png" alt="Quiz" class="w-44 h-36 object-contain flex-shrink-0">
+                    <div class="flex-1">
+                        <h3 class="text-3xl font-semibold text-slate-900">Quiz</h3>
+                        <p class="mt-3 text-base text-slate-900">Each quiz is designed to reinforce what you've learned in the lessons, helping you identify strengths and areas for improvement. Complete 'lessons' to unlock this feature.</p>
+                    </div>
+                </div>
+                <button type="button" id="quiz-btn" class="inline-flex items-center gap-2 rounded-full bg-slate-400 px-8 py-4 text-base font-semibold text-white flex-shrink-0 cursor-not-allowed" disabled>
+                    Get Started 🔒
+                </button>
+            </div>
+        </div>
+
+        <!-- Resources Card -->
+        <div class="rounded-3xl bg-white border border-slate-200 p-12 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between gap-8">
+                <div class="flex items-start gap-8">
+                    <img src="assets/images/resourcespngdash.png" alt="Resources" class="w-44 h-36 object-contain flex-shrink-0">
+                    <div class="flex-1">
+                        <h3 class="text-3xl font-semibold text-slate-900">Resources</h3>
+                        <p class="mt-3 text-base text-slate-900">Explore additional materials to support your learning. From blogs and best-practice guides to real-world case study videos, deepen your understanding and stay up-to-date on cybersecurity fundamentals.</p>
+                    </div>
+                </div>
+                <a href="resources.html" class="inline-flex items-center gap-2 rounded-full bg-slate-600 hover:bg-slate-700 px-8 py-4 text-base font-semibold text-white transition flex-shrink-0">
+                    Get Started →
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="w-full px-6 py-8 mt-auto border-t border-slate-200/70">
+    <div class="max-w-6xl mx-auto">
+    <div class="flex items-center justify-between text-sm text-slate-900">
+        <p>&copy; 2025 CyberLearn. All rights reserved.</p>
+        <div class="flex gap-4">
+            <a href="encryption-demo.html" class="hover:underline font-medium">Encryption</a>
+            <a href="policy.html" class="hover:underline font-medium">Policy</a>
+        </div>
+    </div>
+</footer>
+
+<script src="assets/js/cyberlearn.js"></script>
+<script src="assets/js/session-timeout.js"></script>
+
+<script>
+    if (!window.CyberLearn || !window.CyberLearn.getActiveUser()) {
+        window.location.href = 'landing.html';
+    }
+
+    const quizBtn = document.getElementById('quiz-btn');
+    const quizCard = quizBtn.closest('.rounded-3xl');
+    
+    function updateQuizButton() {
+        const progress = window.CyberLearn.getProgress();
+        const lessonsProgress = progress.lessons || {};
+        const allLessonsComplete = window.CyberLearn.LESSON_IDS.every((id) => (lessonsProgress[id] || 0) >= 100);
+        
+        if (allLessonsComplete) {
+            quizBtn.disabled = false;
+            quizBtn.className = 'inline-flex items-center gap-2 rounded-full bg-slate-600 hover:bg-slate-700 px-8 py-4 text-base font-semibold text-white transition flex-shrink-0 cursor-pointer';
+            quizBtn.textContent = 'Get Started →';
+            quizCard.className = 'rounded-3xl bg-white border border-slate-200 p-12 shadow-sm hover:shadow-md transition';
+        } else {
+            quizBtn.disabled = true;
+            quizBtn.className = 'inline-flex items-center gap-2 rounded-full bg-slate-300 px-8 py-4 text-base font-semibold text-slate-500 flex-shrink-0 cursor-not-allowed';
+            quizBtn.textContent = 'Get Started 🔒';
+            quizCard.className = 'rounded-3xl bg-slate-100 border border-slate-200 p-12 shadow-sm opacity-60';
+        }
+    }
+
+    quizBtn.addEventListener('click', (e) => {
+        const progress = window.CyberLearn.getProgress();
+        const lessonsProgress = progress.lessons || {};
+        const allLessonsComplete = window.CyberLearn.LESSON_IDS.every((id) => (lessonsProgress[id] || 0) >= 100);
+        
+        if (allLessonsComplete) {
+            window.location.href = 'quiz.html';
+        } else {
+            alert('Please complete all lessons first before taking the quiz.');
+        }
+    });
+
+    updateQuizButton();
+
+const navContainer = document.querySelector('[data-nav-container]');
+    if (navContainer) {
+        const userButton = navContainer.querySelector('[data-nav-user]');
+        const menu = navContainer.querySelector('[data-nav-menu]');
+        const logoutButton = navContainer.querySelector('[data-nav-logout]');
+        
+        if (userButton && menu) {
+            userButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                menu.classList.toggle('hidden');
+            });
+            
+            menu.addEventListener('click', (event) => {
+                event.stopPropagation();
+            });
+        }
+        
+        if (logoutButton) {
+            logoutButton.addEventListener('click', () => {
+                if (window.CyberLearn && window.CyberLearn.logout) {
+                    window.CyberLearn.logout();
+                }
+                window.location.href = 'landing.html';
+            });
+        }
+    }
+
+    document.addEventListener('click', () => {
+        const menus = document.querySelectorAll('[data-nav-menu]');
+        menus.forEach((menu) => {
+            menu.classList.add('hidden');
+        });
+    });
+
+const quizNavLink = document.querySelector('[data-nav-quiz]');
+    if (quizNavLink) {
+        quizNavLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const progress = window.CyberLearn.getProgress();
+            const lessonsProgress = progress.lessons || {};
+            const allLessonsComplete = window.CyberLearn.LESSON_IDS.every((id) => (lessonsProgress[id] || 0) >= 100);
+            
+            if (allLessonsComplete) {
+                window.location.href = 'quiz.html';
+            } else {
+                alert('Please complete all lessons first before taking the quiz.');
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

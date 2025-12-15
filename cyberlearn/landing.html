@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberLearn | Cybersecurity Made Simple</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-image: url('assets/images/8a64a84ca204cd4bc4f075371baa76192838cc82.png'), linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-blend-mode: overlay;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .hero-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        
+        .hero-content {
+            text-align: center;
+            color: white;
+            max-width: 700px;
+        }
+        
+        h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+        
+        .subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-weight: 400;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 16px 48px;
+            background: white;
+            color: #667eea;
+            border: 2px solid white;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            background: transparent;
+            color: white;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header class="px-8 lg:px-12 py-6 flex items-center justify-between gap-6">
+    <a href="landing.html" class="flex items-center gap-2">
+        <img src="assets/images/logo.png" alt="CyberLearn Logo" class="h-24 w-auto">
+    </a>
+    <a href="auth.html" class="inline-flex items-center justify-center rounded-full border-2 border-white px-8 py-3 text-lg font-semibold text-white hover:bg-white/10 transition">
+        LOGIN
+    </a>
+</header>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>Welcome to CyberLearn</h1>
+        <p class="subtitle">Build safer online habits in minutes.</p>
+        <p class="text-lg opacity-90 mb-10">
+            Short lessons, friendly quizzes and easy-to-understand resources to guide you through important everyday cybersecurity decisions.
+        </p>
+        <a href="auth.html" class="cta-button">Get Started</a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="px-8 lg:px-12 py-8 border-t border-white/20 text-white/80 text-sm">
+    <div class="flex items-center justify-between">
+        <p>&copy; 2025 CyberLearn. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="assets/js/cyberlearn.js"></script>
+</body>
+</html>

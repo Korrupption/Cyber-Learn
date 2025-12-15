@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberLearn | Encryption</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-image: url('assets/images/8a64a84ca204cd4bc4f075371baa76192838cc82.png'), linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-blend-mode: overlay;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-900">
+
+<!-- Back Button -->
+<div class="px-8 lg:px-12 py-6">
+    <a href="lessons.html" class="inline-flex items-center gap-2 rounded-full border-2 border-white/40 backdrop-blur-sm px-4 py-2 text-sm font-semibold text-white hover:bg-white/10 transition">
+        ← Back
+    </a>
+</div>
+
+<!-- Main Content -->
+<main class="flex items-center justify-center px-6 py-12">
+    <div class="w-full max-w-2xl bg-white/20 backdrop-blur-md rounded-3xl p-8 shadow-lg border border-white/30">
+        <h1 class="text-3xl font-bold text-white mb-2 text-center">How Encryption Works</h1>
+        <p class="text-white/90 text-center mb-8">Passwords are encrypted using XOR cipher and Base64 for security.</p>
+
+        <!-- Input Section -->
+        <div class="space-y-6">
+            <div>
+                <label class="block text-white font-semibold mb-3 text-lg">Enter text to encrypt:</label>
+                <input id="plain-text" type="text" value="password123" class="w-full rounded-2xl border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-3 text-base text-white placeholder-white/60 focus:border-white focus:outline-none focus:bg-white/20 transition">
+            </div>
+
+            <!-- Encrypt Button -->
+            <button id="encrypt-btn" class="w-full rounded-full bg-white/30 hover:bg-white/40 border border-white/40 px-6 py-3 text-base font-semibold text-white transition">
+                Encrypt Text
+            </button>
+
+            <!-- Encrypted Result -->
+            <div>
+                <label class="block text-white font-semibold mb-3 text-lg">Encrypted text:</label>
+                <div id="encrypted-result" class="w-full rounded-2xl border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-3 text-base text-white/80 min-h-12 break-words">
+                    -
+                </div>
+            </div>
+
+            <!-- Decrypt Button -->
+            <button id="decrypt-btn" disabled class="w-full rounded-full bg-white/20 hover:bg-white/30 disabled:opacity-50 disabled:cursor-not-allowed border border-white/40 px-6 py-3 text-base font-semibold text-white transition">
+                Decrypt Text
+            </button>
+
+            <!-- Decrypted Result -->
+            <div>
+                <label class="block text-white font-semibold mb-3 text-lg">Decrypted text:</label>
+                <div id="decrypted-result" class="w-full rounded-2xl border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-3 text-base text-white/80 min-h-12 break-words">
+                    -
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="pt-6 border-t border-white/20">
+                <p class="text-white/90 text-center text-sm">
+                    <span class="font-semibold">Total accounts:</span> <span id="total-accounts">0</span> | 
+                    <span class="font-semibold">Encrypted:</span> <span id="encrypted-accounts">0</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="assets/js/encryption.js"></script>
+<script>
+    function updateStats() {
+        const stats = CyberEncrypt.getEncryptionStats();
+        document.getElementById('total-accounts').textContent = stats.total;
+        document.getElementById('encrypted-accounts').textContent = stats.encrypted;
+    }
+
+    let currentEncrypted = '';
+    
+    document.getElementById('encrypt-btn').addEventListener('click', function() {
+        const plainText = document.getElementById('plain-text').value;
+        if (!plainText) {
+            alert('Please enter text to encrypt');
+            return;
+        }
+        currentEncrypted = CyberEncrypt.encrypt(plainText);
+        document.getElementById('encrypted-result').textContent = currentEncrypted;
+        document.getElementById('decrypt-btn').disabled = false;
+    });
+
+    document.getElementById('decrypt-btn').addEventListener('click', function() {
+        if (!currentEncrypted) return;
+        const decrypted = CyberEncrypt.decrypt(currentEncrypted);
+        document.getElementById('decrypted-result').textContent = decrypted;
+    });
+
+    updateStats();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberLearn | Login & Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-image: url('assets/images/8a64a84ca204cd4bc4f075371baa76192838cc82.png'), linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-blend-mode: overlay;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-900">
+<!-- Logo and Nav -->
+<div class="px-8 lg:px-12 py-6 flex items-center justify-between">
+    <a href="landing.html" class="flex items-center gap-2">
+        <img src="assets/images/logo.png" alt="CyberLearn Logo" class="h-20 w-auto">
+    </a>
+    <a href="landing.html" class="text-white/90 hover:text-white text-lg font-semibold transition">Home</a>
+</div>
+
+<!-- Main Content - Two Cards Side by Side -->
+<main class="flex-1 flex items-center justify-center px-6 py-12">
+    <div class="w-full max-w-5xl grid gap-8 lg:grid-cols-2">
+        <!-- Left Card - Login -->
+        <div class="bg-white/20 backdrop-blur-md rounded-3xl p-8 shadow-lg border border-white/30">
+            <h2 class="text-2xl font-bold text-white mb-8 text-center">Existing User?<br>Login</h2>
+
+            <form id="login-form" data-auth-panel="login" class="auth-panel space-y-4">
+                <div>
+                    <input id="login-email" type="email" class="w-full rounded-2xl border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-3 text-base text-white placeholder-white/60 focus:border-white focus:outline-none focus:bg-white/20 transition" placeholder="Email" required>
+                </div>
+                <div>
+                    <input id="login-password" type="password" class="w-full rounded-2xl border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-3 text-base text-white placeholder-white/60 focus:border-white focus:outline-none focus:bg-white/20 transition" placeholder="Password" required>
+                </div>
+                <p id="login-message" class="text-sm font-medium text-rose-200 hidden"></p>
+                <button type="submit" class="w-full rounded-full bg-slate-600 hover:bg-slate-700 px-4 py-3 text-base font-semibold text-white transition">Login</button>
+            </form>
+        </div>
+
+        <!-- Right Card - Register -->
+        <div class="bg-white/20 backdrop-blur-md rounded-3xl p-8 shadow-lg border border-white/30">
+            <h2 class="text-2xl font-bold text-white mb-8 text-center">New User?<br>Register</h2>
+
+            <form id="register-form" data-auth-panel="register" class="auth-panel space-y-4">
+                <div>
+                    <input id="reg-name" type="text" class="w-full rounded-2xl border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-3 text-base text-white placeholder-white/60 focus:border-white focus:outline-none focus:bg-white/20 transition" placeholder="Name" required>
+                </div>
+                <div>
+                    <input id="reg-email" type="email" class="w-full rounded-2xl border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-3 text-base text-white placeholder-white/60 focus:border-white focus:outline-none focus:bg-white/20 transition" placeholder="Enter Email" required>
+                </div>
+                <div>
+                    <input id="reg-password" type="password" class="w-full rounded-2xl border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-3 text-base text-white placeholder-white/60 focus:border-white focus:outline-none focus:bg-white/20 transition" placeholder="Create Password" required>
+                    <ul class="mt-3 text-xs text-white/80 space-y-1 ml-4">
+                        <li>• At least 8 characters</li>
+                        <li>• At least 1 number</li>
+                        <li>• At least one special symbol</li>
+                    </ul>
+                </div>
+                <p id="reg-message" class="text-sm font-medium text-rose-200 hidden"></p>
+                <button type="submit" class="w-full rounded-full bg-slate-600 hover:bg-slate-700 px-4 py-3 text-base font-semibold text-white transition">Submit</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<script>
+    function goToLessonIntro() {
+        window.location.href = "dashboard.html";
+    }
+
+    function getAccounts() {
+        const raw = localStorage.getItem('osafe_accounts');
+        try {
+            return raw ? JSON.parse(raw) : {};
+        } catch (e) {
+            console.warn("Resetting accounts due to parse error", e);
+            return {};
+        }
+    }
+
+    function saveAccounts(accounts) {
+        localStorage.setItem('osafe_accounts', JSON.stringify(accounts));
+    }
+
+    function validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+
+
+    const registerForm = document.getElementById('register-form');
+    const regName = document.getElementById('reg-name');
+    const regEmail = document.getElementById('reg-email');
+    const regPassword = document.getElementById('reg-password');
+    const regMsg = document.getElementById('reg-message');
+
+    registerForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        regMsg.classList.add('hidden');
+
+        const name = regName.value.trim();
+        const email = regEmail.value.trim();
+        const pass = regPassword.value.trim();
+
+        if (!name) {
+            regMsg.textContent = "Please enter your name.";
+            regMsg.classList.remove('hidden');
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            regMsg.textContent = "Please enter a valid email address.";
+            regMsg.classList.remove('hidden');
+            return;
+        }
+
+        if (pass.length < 8 || !/[0-9]/.test(pass) || !/[^A-Za-z0-9]/.test(pass)) {
+            regMsg.textContent = "Password must be 8+ characters with a number and symbol.";
+            regMsg.classList.remove('hidden');
+            return;
+        }
+
+        const accounts = getAccounts();
+        if (accounts[email]) {
+            regMsg.textContent = "An account with this email already exists. Please sign in.";
+            regMsg.classList.remove('hidden');
+            return;
+        }
+
+        const newAccount = {
+            name,
+            password: pass,
+            createdAt: new Date().toISOString()
+        };
+        
+        accounts[email] = window.CyberEncrypt ? 
+            window.CyberEncrypt.encryptAccountData(newAccount) : 
+            newAccount;
+        
+        saveAccounts(accounts);
+
+        localStorage.setItem('osafe_currentUserEmail', email);
+        localStorage.setItem('osafe_currentUserName', name);
+
+        goToLessonIntro();
+    });
+
+    const loginForm = document.getElementById('login-form');
+    const loginEmail = document.getElementById('login-email');
+    const loginPassword = document.getElementById('login-password');
+    const loginMsg = document.getElementById('login-message');
+
+    loginForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        loginMsg.classList.add('hidden');
+
+        const email = loginEmail.value.trim();
+        const pass = loginPassword.value.trim();
+
+        if (!validateEmail(email)) {
+            loginMsg.textContent = "Please enter a valid email address.";
+            loginMsg.classList.remove('hidden');
+            return;
+        }
+
+        const accounts = getAccounts();
+        const account = accounts[email];
+
+        if (!account) {
+            loginMsg.textContent = "No account found with this email. Please create an account.";
+            loginMsg.classList.remove('hidden');
+            return;
+        }
+
+        const actualPassword = account.encrypted && window.CyberEncrypt ? 
+            window.CyberEncrypt.decrypt(account.password) : 
+            account.password;
+
+        if (actualPassword !== pass) {
+            loginMsg.textContent = "Incorrect password. Please try again.";
+            loginMsg.classList.remove('hidden');
+            return;
+        }
+
+        const storedName = account.name || email.split('@')[0];
+
+        if (!account.name) {
+            account.name = storedName;
+            saveAccounts(accounts);
+        }
+
+        localStorage.setItem('osafe_currentUserEmail', email);
+        localStorage.setItem('osafe_currentUserName', storedName);
+
+        goToLessonIntro();
+    });
+</script>
+
+<footer class="px-8 lg:px-12 py-8 border-t border-white/20 text-white/80 text-sm">
+    <div class="flex items-center justify-between">
+        <p>&copy; 2025 CyberLearn. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="assets/js/encryption.js"></script>
+</body>
+</html>

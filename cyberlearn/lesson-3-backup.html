@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 3 · Social Media Safety</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-image: url('assets/images/8a64a84ca204cd4bc4f075371baa76192838cc82.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f8fafc;
+        }
+        .option-card { border-radius: 24px; border: 1px solid rgb(226 232 240); padding: 1.5rem; text-align: left; background: white; transition: border-color 0.2s, box-shadow 0.2s; }
+        .option-card:hover { border-color: rgb(51 65 85); box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08); }
+        .option-card.selected { border-color: rgb(15 23 42); box-shadow: 0 20px 45px rgba(15, 23, 42, 0.15); }
+        .drawer-enter { animation: drawer-enter 0.25s ease-out forwards; }
+        @keyframes drawer-enter { from { transform: translateX(-12px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900">
+<header class="bg-white/30 backdrop-blur-md border-b border-slate-200/70">
+    <div class="px-8 lg:px-12 py-4 flex items-center justify-between gap-6">
+        <button type="button" id="lesson-menu" class="text-3xl text-white hover:opacity-70 transition">
+            &#9776;
+        </button>
+        <div class="relative flex items-center gap-3" data-nav-container>
+            <button type="button" data-nav-user class="hidden items-center justify-center rounded-full" aria-label="Account menu">
+                <img src="assets/images/account_logo.png" alt="Account" class="h-16 w-16">
+            </button>
+            <div data-nav-menu class="absolute right-0 top-12 hidden w-52 rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl z-50">
+                <p class="text-xs font-medium text-slate-900 mb-2">Signed in as</p>
+                <p data-nav-user-name class="text-sm font-semibold text-slate-900">Your account</p>
+                <p data-nav-user-email class="text-xs text-slate-900 mb-3">email@example.com</p>
+                <a href="dashboard.html" class="block rounded-xl bg-slate-900 px-4 py-2 text-center text-sm font-semibold text-white mb-2">Dashboard</a>
+                <button type="button" data-nav-logout class="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-50">
+                    Log out
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main id="lesson-content" class="max-w-5xl mx-auto px-6 py-10 lg:py-14">
+        <p class="text-sm font-semibold text-slate-900">Lesson 3</p>
+        <h1 class="mt-2 text-3xl font-semibold">Social media safety</h1>
+        <p class="mt-3 text-lg text-slate-900">
+            Scammers use Facebook, WhatsApp, and Instagram to send urgent messages or fake friend requests. Slow down, double-check, and keep control of what you share.
+        </p>
+        <button type="button" onclick="toggleAudio(this)" class="mt-4 inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-100">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+            </svg>
+            <span data-audio-label>Listen to lesson</span>
+        </button>
+
+        <div class="mt-8 rounded-3xl border border-slate-100 bg-slate-900/5 p-6">
+            <p class="text-sm font-semibold uppercase tracking-wide text-slate-900">Scenario question</p>
+            <h2 class="mt-2 text-2xl font-semibold">A "new" friend request appears from your granddaughter.</h2>
+            <p class="mt-2 text-sm text-slate-900">Her profile photo and name look identical to the one you're already connected to.</p>
+            <div class="mt-6 grid gap-4 md:grid-cols-2" id="option-grid">
+                <button type="button" class="option-card" data-option="A" data-correct="true" data-explanation="Contacting her using the number you already have confirms the request before you share anything.">
+                    <div class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-900">Option A</div>
+                    <h3 class="mt-2 text-xl font-semibold">Ignore the request and phone her using the number saved on your phone.</h3>
+                </button>
+                <button type="button" class="option-card" data-option="B" data-correct="false" data-explanation="Accepting quickly can expose private posts and opens the door for money requests.">
+                    <div class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-900">Option B</div>
+                    <h3 class="mt-2 text-xl font-semibold">Accept the request straight away to be polite.</h3>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="mt-10 grid gap-6 md:grid-cols-2">
+        <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h3 class="text-lg font-semibold">Spot the red flags</h3>
+            <ul class="mt-4 space-y-2 text-sm text-slate-900">
+                <li>Urgent money requests through private messages</li>
+                <li>Links that take you away from the social network</li>
+                <li>Friend requests from people you are already connected with</li>
+                <li>Prize messages when you never entered a competition</li>
+            </ul>
+        </article>
+        <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h3 class="text-lg font-semibold">Privacy checklist</h3>
+            <ul class="mt-4 space-y-2 text-sm text-slate-900">
+                <li>Only share personal updates with friends you know</li>
+                <li>Keep birthdays, addresses, and holidays private</li>
+                <li>Regularly review which apps can access your account</li>
+                <li>Report anything suspicious directly to the platform</li>
+            </ul>
+        </article>
+    </section>
+
+    <div class="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-slate-200 pt-6">
+        <a href="lessons.html" class="text-sm font-semibold text-slate-900 hover:text-slate-900">&larr; Back to lessons</a>
+        <a href="lesson-4.html" class="inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white">Next lesson &rarr;</a>
+    </div>
+</main>
+
+<div id="feedback-modal" class="fixed inset-0 z-40 hidden items-center justify-center bg-slate-900/60 px-6">
+    <div class="relative max-w-md rounded-3xl bg-white p-8 shadow-2xl">
+        <button type="button" id="feedback-close" class="absolute right-4 top-4 text-2xl text-slate-800 hover:text-slate-900" aria-label="Close">&times;</button>
+        <div id="feedback-icon" class="mb-4 text-4xl">✅</div>
+        <h3 id="feedback-title" class="text-2xl font-semibold">Great choice!</h3>
+        <p id="feedback-text" class="mt-3 text-slate-900"></p>
+        <button type="button" id="feedback-continue" class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-base font-semibold text-white">Close</button>
+    </div>
+</div>
+
+<div id="lesson-drawer" class="fixed inset-0 z-50 hidden bg-slate-900/50 px-6 py-10">
+    <div class="drawer-enter max-w-sm rounded-3xl bg-white p-8 shadow-2xl">
+        <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">Quick links</h3>
+            <button type="button" id="drawer-close" class="text-2xl text-slate-800 hover:text-slate-900" aria-label="Close menu">&times;</button>
+        </div>
+        <nav class="mt-6 space-y-3 text-sm font-semibold text-slate-900">
+            <a href="lessons.html" class="block rounded-2xl border border-slate-200 px-4 py-3 hover:border-slate-400">Lessons dashboard</a>
+            <a href="quiz.html" class="block rounded-2xl border border-slate-200 px-4 py-3 hover:border-slate-400">Final quiz</a>
+            <a href="resources.html" class="block rounded-2xl border border-slate-200 px-4 py-3 hover:border-slate-400">Resources</a>
+            <a href="lesson-intro.html" class="block rounded-2xl border border-slate-200 px-4 py-3 hover:border-slate-400">Lesson overview</a>
+        </nav>
+        <button type="button" id="drawer-logout" class="mt-8 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-50">Log out</button>
+    </div>
+</div>
+
+<script src="assets/js/cyberlearn.js"></script>
+<script src="assets/js/cyberlearn.js"></script>
+<script src="assets/js/session-timeout.js"></script>
+
+<script>
+    if (!window.CyberLearn || !window.CyberLearn.getActiveUser()) {
+        document.body.innerHTML = '<div style="position:fixed;inset:0;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:9999;"><div style="background:white;padding:3rem;border-radius:1.5rem;max-width:400px;text-align:center;box-shadow:0 25px 50px rgba(0,0,0,0.3);"><h2 style="font-size:1.5rem;font-weight:600;margin-bottom:1rem;color:#0f172a;">Access Denied</h2><p style="color:#475569;margin-bottom:1.5rem;">You must be logged in to access learning resources.</p><p style="font-size:0.875rem;color:#94a3b8;">Redirecting to login...</p></div></div>';
+        setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+    }
+</script>
+<script>
+(function () {
+    const LESSON_ID = 'lesson-3';
+    const optionButtons = document.querySelectorAll('[data-option]');
+    const feedbackModal = document.getElementById('feedback-modal');
+    const feedbackTitle = document.getElementById('feedback-title');
+    const feedbackText  = document.getElementById('feedback-text');
+    const feedbackIcon  = document.getElementById('feedback-icon');
+    const feedbackClose = document.getElementById('feedback-close');
+    const feedbackContinue = document.getElementById('feedback-continue');
+    const lessonMenu = document.getElementById('lesson-menu');
+    const lessonUserPill = document.getElementById('lesson-user-pill');
+
+    let lastWasCorrect = false;
+
+    const user = window.CyberLearn && window.CyberLearn.getActiveUser ? window.CyberLearn.getActiveUser() : null;
+
+    const drawer = document.getElementById('lesson-drawer');
+    const drawerClose = document.getElementById('drawer-close');
+    const drawerLogout = document.getElementById('drawer-logout');
+
+    function openDrawer() {
+        drawer.classList.remove('hidden');
+    }
+
+    function closeDrawer() {
+        drawer.classList.add('hidden');
+    }
+
+    if (lessonMenu) {
+        lessonMenu.addEventListener('click', openDrawer);
+    }
+
+    if (drawerClose) {
+        drawerClose.addEventListener('click', closeDrawer);
+    }
+
+    if (drawer) {
+        drawer.addEventListener('click', (event) => {
+            if (event.target === drawer) {
+                closeDrawer();
+            }
+        });
+    }
+
+    if (drawerLogout) {
+        drawerLogout.addEventListener('click', () => {
+            window.CyberLearn.logout();
+            closeDrawer();
+            window.location.href = 'index.html';
+        });
+    }
+
+    function openModal(correct, explanation) {
+        if (!feedbackModal) return;
+        feedbackModal.classList.remove('hidden');
+        feedbackModal.classList.add('flex');
+
+        if (correct) {
+            feedbackTitle.textContent = 'Great choice!';
+            feedbackIcon.textContent = '✅';
+            feedbackContinue.textContent = 'Next lesson';
+        } else {
+            feedbackTitle.textContent = 'Try the safer option';
+            feedbackIcon.textContent = '⚠️';
+            feedbackContinue.textContent = 'Try again';
+        }
+
+        feedbackText.textContent = explanation || '';
+    }
+
+    function closeModal() {
+        if (!feedbackModal) return;
+        feedbackModal.classList.add('hidden');
+        feedbackModal.classList.remove('flex');
+
+        if (lastWasCorrect) {
+            window.location.href = 'lesson-4.html';
+        }
+    }
+
+    function handleSelection(button) {
+        optionButtons.forEach((btn) => btn.classList.remove('selected'));
+        button.classList.add('selected');
+
+        const correct = button.dataset.correct === 'true';
+        const explanation = button.dataset.explanation || '';
+
+        lastWasCorrect = correct;
+
+        if (correct) {
+            window.CyberLearn.markLessonProgress(LESSON_ID, 100);
+        } else {
+            window.CyberLearn.markLessonProgress(LESSON_ID, 50);
+        }
+
+        openModal(correct, explanation);
+    }
+
+    optionButtons.forEach((button) => {
+        button.addEventListener('click', () => handleSelection(button));
+    });
+
+    [feedbackClose, feedbackContinue].forEach((btn) => {
+        if (btn) btn.addEventListener('click', closeModal);
+    });
+})();
+</script>
+
+<script>
+let isReading = false;
+function toggleAudio(button) {
+    const label = button ? button.querySelector('[data-audio-label]') : document.getElementById('audio-btn-text');
+    if (isReading) {
+        window.speechSynthesis.cancel();
+        isReading = false;
+        if (label) {
+            label.textContent = 'Listen to lesson';
+        }
+    } else {
+        const content = document.getElementById('lesson-content');
+        if (!content || !window.speechSynthesis) return;
+
+        const text = content.innerText;
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.onend = () => {
+            isReading = false;
+            if (label) {
+                label.textContent = 'Listen to lesson';
+            }
+        };
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
+        isReading = true;
+        if (label) {
+            label.textContent = 'Stop reading';
+        }
+    }
+}
+</script>
+
+<script>
+const navContainer = document.querySelector('[data-nav-container]');
+if (navContainer) {
+    const userButton = navContainer.querySelector('[data-nav-user]');
+    const userName = navContainer.querySelector('[data-nav-user-name]');
+    const userEmail = navContainer.querySelector('[data-nav-user-email]');
+    const menu = navContainer.querySelector('[data-nav-menu]');
+    const logoutButton = navContainer.querySelector('[data-nav-logout]');
+    
+    const user = window.CyberLearn && window.CyberLearn.getActiveUser ? window.CyberLearn.getActiveUser() : null;
+    
+    if (user && userButton) {
+        userButton.classList.remove('hidden');
+        userButton.classList.add('flex');
+        if (userName) userName.textContent = user.name;
+        if (userEmail) userEmail.textContent = user.email;
+        
+        userButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            menu.classList.toggle('hidden');
+        });
+        
+        if (menu) {
+            menu.addEventListener('click', (event) => {
+                event.stopPropagation();
+            });
+        }
+    }
+    
+    if (logoutButton) {
+        logoutButton.addEventListener('click', () => {
+            if (window.CyberLearn && window.CyberLearn.logout) {
+                window.CyberLearn.logout();
+            }
+            window.location.href = 'landing.html';
+        });
+    }
+}
+
+document.addEventListener('click', () => {
+    const menus = document.querySelectorAll('[data-nav-menu]');
+    menus.forEach((menu) => {
+        menu.classList.add('hidden');
+    });
+});
+</script>
+
+<footer class="max-w-6xl mx-auto px-6 py-8 mt-12 border-t border-slate-200/70">
+    <div class="flex items-center justify-between text-sm text-slate-900">
+        <p>&copy; 2025 CyberLearn. All rights reserved.</p>
+        <a href="policy.html" class="hover:underline font-medium">Policy</a>
+    </div>
+</footer>
+
+</body>
+</html>

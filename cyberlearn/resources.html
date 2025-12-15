@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources – CyberEase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-image: url('assets/images/8a64a84ca204cd4bc4f075371baa76192838cc82.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f8fafc;
+        }
+        .article-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .article-content.expanded { max-height: 3000px; }
+        .drawer-enter { animation: drawer-enter 0.25s ease-out forwards; }
+        @keyframes drawer-enter { from { transform: translateX(-12px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    </style>
+
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900">
+<header class="bg-white/30 backdrop-blur-md border-b border-slate-200/70">
+    <div class="px-8 lg:px-12 py-4 flex items-center justify-between gap-6">
+        <a href="#" id="resources-logo" class="flex items-center gap-2">
+            <img src="assets/images/logo.png" alt="CyberLearn Logo" class="h-20 w-auto">
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-900">
+            <a href="dashboard.html" class="hover:text-slate-900">Dashboard</a>
+            <a href="lessons.html" class="hover:text-slate-900">Lessons</a>
+            <a href="#" data-nav-quiz class="hover:text-slate-900">Quiz</a>
+            <a href="resources.html" class="text-slate-900">Resources</a>
+        </nav>
+        <div class="relative flex items-center gap-3" data-nav-container>
+            <a data-nav-auth href="index.html#auth" class="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white">Login</a>
+            <button type="button" data-nav-user class="hidden items-center justify-center rounded-full" aria-label="Account menu">
+                <img src="assets/images/account_logo.png" alt="Account" class="h-16 w-16">
+            </button>
+            <div data-nav-menu class="absolute right-0 top-12 hidden w-52 rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl">
+                <p class="text-xs font-medium text-slate-900 mb-2">Signed in as</p>
+                <p data-nav-user-name class="text-sm font-semibold text-slate-900">Your account</p>
+                <p data-nav-user-email class="text-xs text-slate-900 mb-3">email@example.com</p>
+                <a href="dashboard.html" class="block rounded-xl bg-slate-900 px-4 py-2 text-center text-sm font-semibold text-white mb-2">Dashboard</a>
+                <button type="button" data-nav-logout class="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-50">Log out</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-6 py-10 lg:py-14">
+    <div class="mb-12">
+        <h1 class="text-4xl font-semibold text-gray-900 mb-4">
+            Resources
+        </h1>
+        <p class="text-lg text-gray-900">
+            Additional reading to expand your knowledge.
+        </p>
+    </div>
+
+    <div class="space-y-4">
+        <!-- Article 1 -->
+        <article class="border-b border-gray-200 pb-12">
+            <div class="flex items-start justify-between mb-4">
+                <div class="flex-1">
+                    <h2 class="text-2xl font-semibold text-gray-900 mb-2">
+                        Common signs of an online scam
+                    </h2>
+                    <p class="text-gray-900 mb-3">
+                        Warning signs to look for in emails, messages, and phone calls.
+                    </p>
+                    <button onclick="toggleAudio('article1', this)" class="text-sm text-gray-900 hover:text-gray-900 font-medium flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+                        </svg>
+                        <span class="audio-text">Listen</span>
+                    </button>
+                </div>
+                <button onclick="toggleArticle('article1')" class="ml-6 text-sm text-gray-900 hover:text-gray-900 underline whitespace-nowrap">
+                    Read more
+                </button>
+            </div>
+
+            <div id="article1" class="article-content">
+                <div class="prose prose-gray max-w-none pt-4 space-y-6 text-gray-900">
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-3">Warning signs:</h3>
+                        <ul class="space-y-2">
+                            <li><strong>Urgency:</strong> "Act now!", "Limited time!", "Account will be closed"</li>
+                            <li><strong>Personal information requests:</strong> Banks never ask for passwords or PINs</li>
+                            <li><strong>Too good to be true:</strong> Unexpected prizes or deals</li>
+                            <li><strong>Poor spelling:</strong> Real companies proofread their messages</li>
+                            <li><strong>Suspicious links:</strong> Check where links actually go before clicking</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-100 p-6">
+                        <h4 class="font-medium text-gray-900 mb-2">What to do:</h4>
+                        <ul class="space-y-1 text-sm">
+                            <li>• Don't click links or download attachments</li>
+                            <li>• Contact companies directly using trusted phone numbers</li>
+                            <li>• Report suspicious emails to report@phishing.gov.uk</li>
+                            <li>• Forward suspicious texts to 7726 (free)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Article 2 -->
+        <article class="border-b border-gray-200 pb-12">
+            <div class="flex items-start justify-between mb-4">
+                <div class="flex-1">
+                    <h2 class="text-2xl font-semibold text-gray-900 mb-2">
+                        Making strong passwords
+                    </h2>
+                    <p class="text-gray-900 mb-3">
+                        Create secure passwords that are easy to remember.
+                    </p>
+                    <button onclick="toggleAudio('article2', this)" class="text-sm text-gray-900 hover:text-gray-900 font-medium flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+                        </svg>
+                        <span class="audio-text">Listen</span>
+                    </button>
+                </div>
+                <button onclick="toggleArticle('article2')" class="ml-6 text-sm text-gray-900 hover:text-gray-900 underline whitespace-nowrap">
+                    Read more
+                </button>
+            </div>
+
+            <div id="article2" class="article-content">
+                <div class="prose prose-gray max-w-none pt-4 space-y-6 text-gray-900">
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-3">The 3-word method:</h3>
+                        <p>Pick three random, unrelated words and combine them with numbers and symbols.</p>
+                        <div class="grid md:grid-cols-2 gap-4 mt-4">
+                            <div class="bg-green-50 p-4">
+                                <p class="text-sm font-medium text-green-900 mb-1">Good example</p>
+                                <code class="text-green-900">GardenBlueMoon42!</code>
+                            </div>
+                            <div class="bg-red-50 p-4">
+                                <p class="text-sm font-medium text-red-900 mb-1">Bad example</p>
+                                <code class="text-red-900">password123</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-100 p-6">
+                        <h4 class="font-medium text-gray-900 mb-3">Memory tricks:</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><strong>Sentence method:</strong> "I love walking at 7am" → <code>ILoveWalking@7am!</code></li>
+                            <li><strong>Place + object:</strong> Think of a place and object → <code>BeachUmbrella89</code></li>
+                            <li><strong>Never use:</strong> Birthdays, names, common words, or the same password twice</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Article 3 -->
+        <article class="border-b border-gray-200 pb-12">
+            <div class="flex items-start justify-between mb-4">
+                <div class="flex-1">
+                    <h2 class="text-2xl font-semibold text-gray-900 mb-2">
+                        Staying safe on public Wi-Fi
+                    </h2>
+                    <p class="text-gray-900 mb-3">
+                        What's safe and what's not when using coffee shop or airport Wi-Fi.
+                    </p>
+                    <button onclick="toggleAudio('article3', this)" class="text-sm text-gray-900 hover:text-gray-900 font-medium flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+                        </svg>
+                        <span class="audio-text">Listen</span>
+                    </button>
+                </div>
+                <button onclick="toggleArticle('article3')" class="ml-6 text-sm text-gray-900 hover:text-gray-900 underline whitespace-nowrap">
+                    Read more
+                </button>
+            </div>
+
+            <div id="article3" class="article-content">
+                <div class="prose prose-gray max-w-none pt-4 space-y-6 text-gray-900">
+                    <p>Public Wi-Fi networks are not encrypted, which means other people can potentially see what you're doing.</p>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-medium text-gray-900 mb-3">Safe on public Wi-Fi:</h4>
+                            <ul class="text-sm space-y-1">
+                                <li>• Reading news websites</li>
+                                <li>• Checking the weather</li>
+                                <li>• Browsing social media</li>
+                                <li>• Looking at restaurant menus</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="font-medium text-gray-900 mb-3">Not safe on public Wi-Fi:</h4>
+                            <ul class="text-sm space-y-1">
+                                <li>• Online banking</li>
+                                <li>• Shopping with card details</li>
+                                <li>• Entering passwords</li>
+                                <li>• Accessing sensitive data</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-100 p-6">
+                        <p class="text-sm"><strong>Best practice:</strong> Wait until you're home on your own Wi-Fi for anything involving passwords or payments. If urgent, use your mobile data (4G/5G) instead.</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <!-- Glossary -->
+    <div class="mt-20 pt-16 border-t border-gray-200">
+        <h2 class="text-3xl font-light text-gray-900 mb-12">
+            Common terms
+        </h2>
+
+        <dl class="space-y-8">
+            <div>
+                <dt class="font-medium text-gray-900 mb-1">Phishing</dt>
+                <dd class="text-gray-900">Fake emails or messages designed to trick you into giving away personal information.</dd>
+            </div>
+
+            <div>
+                <dt class="font-medium text-gray-900 mb-1">Vishing</dt>
+                <dd class="text-gray-900">"Voice phishing" - scam phone calls pretending to be from your bank or trusted organizations.</dd>
+            </div>
+
+            <div>
+                <dt class="font-medium text-gray-900 mb-1">Smishing</dt>
+                <dd class="text-gray-900">"SMS phishing" - scam text messages like fake delivery notifications.</dd>
+            </div>
+
+            <div>
+                <dt class="font-medium text-gray-900 mb-1">Two-Factor Authentication (2FA)</dt>
+                <dd class="text-gray-900">Extra security requiring both your password and another proof (like a code sent to your phone).</dd>
+            </div>
+
+            <div>
+                <dt class="font-medium text-gray-900 mb-1">HTTPS</dt>
+                <dd class="text-gray-900">The "s" stands for "secure". Look for this and a padlock icon before entering personal information.</dd>
+            </div>
+        </dl>
+    </div>
+
+    <!-- Help -->
+    <div class="mt-20 pt-16 border-t border-gray-200">
+        <h2 class="text-3xl font-light text-gray-900 mb-8">
+            Need help?
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-12">
+            <div>
+                <h3 class="font-medium text-gray-900 mb-4">Report a scam</h3>
+                <ul class="text-sm text-gray-900 space-y-2">
+                    <li>Suspicious emails: report@phishing.gov.uk</li>
+                    <li>Suspicious texts: Forward to 7726 (free)</li>
+                    <li>Report scams: Action Fraud 0300 123 2040</li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-medium text-gray-900 mb-4">Get support</h3>
+                <ul class="text-sm text-gray-900 space-y-2">
+                    <li>Contact your bank immediately if scammed</li>
+                    <li>Ask a trusted family member or friend</li>
+                    <li>Visit Age UK for more resources</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div id="nav-drawer" class="fixed inset-0 z-50 hidden bg-slate-900/50 px-6 py-10">
+    <div class="drawer-enter max-w-sm rounded-3xl bg-white p-8 shadow-2xl">
+        <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">Quick links</h3>
+            <button type="button" id="drawer-close" class="text-2xl text-slate-800 hover:text-slate-900" aria-label="Close menu">&times;</button>
+        </div>
+        <nav class="mt-6 space-y-3 text-sm font-semibold text-slate-900">
+            <a href="lessons.html" class="block rounded-2xl border border-slate-200 px-4 py-3 hover:border-slate-400">Lessons dashboard</a>
+            <a href="quiz.html" class="block rounded-2xl border border-slate-200 px-4 py-3 hover:border-slate-400">Final quiz</a>
+            <a href="resources.html" class="block rounded-2xl border border-slate-200 px-4 py-3 hover:border-slate-400">Resources</a>
+            <a href="lesson-intro.html" class="block rounded-2xl border border-slate-200 px-4 py-3 hover:border-slate-400">Lesson overview</a>
+        </nav>
+        <button type="button" id="drawer-logout" class="mt-8 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-50">Log out</button>
+    </div>
+</div>
+
+<script src="assets/js/cyberlearn.js"></script>
+<script src="assets/js/session-timeout.js"></script>
+
+<script>
+    if (!window.CyberLearn || !window.CyberLearn.getActiveUser()) {
+        document.body.innerHTML = '<div style="position:fixed;inset:0;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:9999;"><div style="background:white;padding:3rem;border-radius:1.5rem;max-width:400px;text-align:center;box-shadow:0 25px 50px rgba(0,0,0,0.3);"><h2 style="font-size:1.5rem;font-weight:600;margin-bottom:1rem;color:#0f172a;">Access Denied</h2><p style="color:#475569;margin-bottom:1.5rem;">You must be logged in to access learning resources.</p><p style="font-size:0.875rem;color:#94a3b8;">Redirecting to login...</p></div></div>';
+        setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+    }
+
+    const resourcesLogo = document.getElementById('resources-logo');
+    if (resourcesLogo) {
+        const isLoggedIn = window.CyberLearn && window.CyberLearn.getActiveUser();
+        resourcesLogo.href = isLoggedIn ? 'dashboard.html' : 'landing.html';
+    }
+</script>
+
+<script>
+function toggleArticle(articleId) {
+    const article = document.getElementById(articleId);
+    const button = event.target;
+    if (article.classList.contains('expanded')) {
+        article.classList.remove('expanded');
+        button.textContent = 'Read more';
+    } else {
+        article.classList.add('expanded');
+        button.textContent = 'Hide';
+    }
+}
+
+let isReading = false;
+let currentButton = null;
+
+function toggleAudio(articleId, button) {
+    if (isReading && currentButton === button) {
+        window.speechSynthesis.cancel();
+        isReading = false;
+        button.querySelector('.audio-text').textContent = 'Listen';
+        currentButton = null;
+    } else {
+        if (isReading) {
+            window.speechSynthesis.cancel();
+            if (currentButton) {
+                currentButton.querySelector('.audio-text').textContent = 'Listen';
+            }
+        }
+
+        const article = document.getElementById(articleId);
+        if (!article || !window.speechSynthesis) return;
+
+        const text = article.innerText;
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.onend = () => {
+            isReading = false;
+            button.querySelector('.audio-text').textContent = 'Listen';
+            currentButton = null;
+        };
+        window.speechSynthesis.speak(utterance);
+        isReading = true;
+        button.querySelector('.audio-text').textContent = 'Stop reading';
+        currentButton = button;
+    }
+}
+
+const drawer = document.getElementById('nav-drawer');
+const drawerClose = document.getElementById('drawer-close');
+const drawerLogout = document.getElementById('drawer-logout');
+
+function openDrawer() {
+    if (drawer) drawer.classList.remove('hidden');
+}
+
+function closeDrawer() {
+    if (drawer) drawer.classList.add('hidden');
+}
+
+if (drawerClose) {
+    drawerClose.addEventListener('click', closeDrawer);
+}
+
+if (drawer) {
+    drawer.addEventListener('click', (event) => {
+        if (event.target === drawer) {
+            closeDrawer();
+        }
+    });
+}
+
+if (drawerLogout) {
+    drawerLogout.addEventListener('click', () => {
+        if (window.CyberLearn && window.CyberLearn.logout) {
+            window.CyberLearn.logout();
+        }
+        closeDrawer();
+        window.location.href = 'landing.html';
+    });
+}
+
+const navContainer = document.querySelector('[data-nav-container]');
+if (navContainer) {
+    const userButton = navContainer.querySelector('[data-nav-user]');
+    const menu = navContainer.querySelector('[data-nav-menu]');
+    const logoutButton = navContainer.querySelector('[data-nav-logout]');
+    
+    if (userButton && menu) {
+        userButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            menu.classList.toggle('hidden');
+        });
+        
+        menu.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+    }
+    
+    if (logoutButton) {
+        logoutButton.addEventListener('click', () => {
+            if (window.CyberLearn && window.CyberLearn.logout) {
+                window.CyberLearn.logout();
+            }
+            window.location.href = 'landing.html';
+        });
+    }
+}
+
+document.addEventListener('click', () => {
+    const menus = document.querySelectorAll('[data-nav-menu]');
+    menus.forEach((menu) => {
+        menu.classList.add('hidden');
+    });
+});
+
+const quizNavLink = document.querySelector('[data-nav-quiz]');
+if (quizNavLink) {
+    quizNavLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        const progress = window.CyberLearn.getProgress();
+        const lessonsProgress = progress.lessons || {};
+        const allLessonsComplete = window.CyberLearn.LESSON_IDS.every((id) => (lessonsProgress[id] || 0) >= 100);
+        
+        if (allLessonsComplete) {
+            window.location.href = 'quiz.html';
+        } else {
+            alert('Please complete all lessons first before taking the quiz.');
+        }
+    });
+}
+</script>
+
+<script src="assets/js/cyberlearn.js"></script>
+
+<footer class="max-w-6xl mx-auto px-6 py-8 mt-12 border-t border-slate-200/70">
+    <div class="flex items-center justify-between text-sm text-slate-900">
+        <p>&copy; 2025 CyberLearn. All rights reserved.</p>
+        <a href="policy.html" class="hover:underline font-medium">Policy</a>
+    </div>
+</footer>
+
+</body>
+</html>

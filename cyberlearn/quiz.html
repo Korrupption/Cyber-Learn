@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberLearn | Final Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-image: url('assets/images/8a64a84ca204cd4bc4f075371baa76192838cc82.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f8fafc;
+        }
+        .option-btn {
+            border-radius: 24px;
+            border: 1px solid rgb(226 232 240);
+            padding: 1.25rem;
+            text-align: left;
+            background: white;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .option-btn:hover {
+            border-color: rgb(30 41 59);
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+        }
+        .option-btn.correct {
+            border-color: rgb(5 150 105);
+            background-color: rgb(236 253 245);
+        }
+        .option-btn.incorrect {
+            border-color: rgb(248 113 113);
+            background-color: rgb(254 242 242);
+        }
+        .drawer-enter { animation: drawer-enter 0.25s ease-out forwards; }
+        @keyframes drawer-enter { from { transform: translateX(-12px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900">
+<header class="bg-white/30 backdrop-blur-md border-b border-slate-200/70">
+    <div class="px-8 lg:px-12 py-4 flex items-center justify-between gap-6">
+        <button type="button" id="quiz-header-menu" class="text-3xl text-white hover:opacity-70 transition">
+            &#9776;
+        </button>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-900">
+            <a href="dashboard.html" class="hover:text-slate-900">Dashboard</a>
+            <a href="lessons.html" class="hover:text-slate-900">Lessons</a>
+            <a href="quiz.html" data-nav-quiz class="hover:text-slate-900">Quiz</a>
+            <a href="resources.html" class="hover:text-slate-900">Resources</a>
+        </nav>
+        <div class="relative flex items-center gap-3" data-nav-container>
+            <a data-nav-auth href="index.html#auth" class="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white">Login</a>
+            <button type="button" data-nav-user class="hidden items-center justify-center rounded-full" aria-label="Account menu">
+                <img src="assets/images/account_logo.png" alt="Account" class="h-16 w-16">
+            </button>
+            <div data-nav-menu class="absolute right-0 top-12 hidden w-48 rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl">
+                <p class="text-xs font-medium text-slate-900 mb-2">Signed in as</p>
+                <p data-nav-user-name class="text-sm font-semibold text-slate-900">Your account</p>
+                <p data-nav-user-email class="text-xs text-slate-900 mb-3">email@example.com</p>
+                <a href="dashboard.html" class="block rounded-xl bg-slate-900 px-4 py-2 text-center text-sm font-semibold text-white mb-2">Dashboard</a>
+                <button type="button" data-nav-logout class="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-50">Log out</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-6 py-10 lg:py-14">
+    <section id="quiz-panel" class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm hidden">
+        <div class="flex items-center justify-between text-sm font-medium text-slate-900">
+            <span id="question-count">Question 1 of 5</span>
+            <span id="question-category">Password Security</span>
+        </div>
+        <div class="mt-3 h-2 w-full rounded-full bg-slate-100">
+            <div id="question-progress" class="h-full rounded-full bg-slate-900" style="width: 0;"></div>
+        </div>
+
+        <div class="mt-8 space-y-4">
+            <div class="space-y-2">
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-900">Question</p>
+                <h2 id="question-text" class="text-2xl font-semibold text-slate-900"></h2>
+                <p id="question-subtext" class="text-sm text-slate-900"></p>
+            </div>
+            <div class="h-40 w-full rounded-3xl border border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-sm font-semibold text-slate-800" id="question-visual">
+                Scenario image placeholder
+            </div>
+        </div>
+
+        <div id="options-grid" class="mt-8 grid gap-4 md:grid-cols-2"></div>
+
+        <div id="option-feedback" class="mt-6 hidden rounded-3xl border border-slate-200 bg-slate-900/5 p-5 text-sm text-slate-900"></div>
+
+        <button type="button" id="next-question" class="mt-8 hidden w-full rounded-full bg-slate-900 px-6 py-3 text-base font-semibold text-white">
+            Next question
+        </button>
+    </section>
+
+    <section id="quiz-results" class="hidden rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+        <p class="text-sm font-semibold text-slate-900">Quiz complete</p>
+        <h2 class="mt-2 text-3xl font-semibold" id="score-heading">You scored 0/5</h2>
+        <p class="mt-3 text-slate-900" id="score-message">Review the sections below to see where to focus.</p>
+
+        <div class="mt-8 grid gap-6 md:grid-cols-3">
+            <article class="rounded-2xl border border-slate-200 p-4">
+                <p class="text-sm font-semibold text-slate-900">Password Security</p>
+                <div class="mt-3 h-2 w-full rounded-full bg-slate-100">
+                    <div id="bar-password" class="h-full rounded-full bg-slate-900" style="width:0"></div>
+                </div>
+                <p id="label-password" class="mt-2 text-sm font-medium text-slate-900">0%</p>
+            </article>
+            <article class="rounded-2xl border border-slate-200 p-4">
+                <p class="text-sm font-semibold text-slate-900">Data Protection</p>
+                <div class="mt-3 h-2 w-full rounded-full bg-slate-100">
+                    <div id="bar-data" class="h-full rounded-full bg-slate-900" style="width:0"></div>
+                </div>
+                <p id="label-data" class="mt-2 text-sm font-medium text-slate-900">0%</p>
+            </article>
+            <article class="rounded-2xl border border-slate-200 p-4">
+                <p class="text-sm font-semibold text-slate-900">Incident Response</p>
+                <div class="mt-3 h-2 w-full rounded-full bg-slate-100">
+                    <div id="bar-incident" class="h-full rounded-full bg-slate-900" style="width:0"></div>
+                </div>
+                <p id="label-incident" class="mt-2 text-sm font-medium text-slate-900">0%</p>
+            </article>
+        </div>
+
+        <div class="mt-10 flex flex-wrap items-center justify-between gap-4">
+            <button type="button" id="retry-quiz" class="rounded-full border border-slate-300 px-5 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-50">Try again</button>
+            <a href="lessons.html" class="rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white">Back to lessons</a>
+        </div>
+    </section>
+</main>
+
+<div id="quiz-intro" class="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/60 px-6">
+    <div class="relative max-w-lg rounded-3xl bg-white p-8 shadow-2xl">
+        <button type="button" id="intro-close" class="absolute right-4 top-4 text-2xl text-slate-800 hover:text-slate-900" aria-label="Close">&times;</button>
+        <p class="text-sm font-semibold text-slate-900">Final quiz</p>
+        <h2 class="mt-2 text-3xl font-semibold">Ready to test your knowledge?</h2>
+        <p class="mt-4 text-slate-900">Five questions cover everything from safe passwords to handling scam messages. Each one has four options. Pick the safest response to see instant feedback.</p>
+        <button type="button" id="intro-start" class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-base font-semibold text-white">Start</button>
+    </div>
+</div>
+
+<div id="quiz-drawer" class="fixed inset-0 z-50 hidden bg-slate-900/50 px-6 py-10">
+    <div class="drawer-enter max-w-sm rounded-3xl bg-white p-8 shadow-2xl">
+        <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">Quick links</h3>
+            <button type="button" id="drawer-close" class="text-2xl text-slate-800 hover:text-slate-900" aria-label="Close menu">&times;</button>
+        </div>
+        <nav class="mt-6 space-y-3 text-sm font-semibold text-slate-900">
+            <a href="lessons.html" class="block rounded-2xl border border-slate-200 px-4 py-3 hover:border-slate-400">Lessons dashboard</a>
+            <a href="quiz.html" class="block rounded-2xl border border-slate-200 px-4 py-3 hover:border-slate-400">Final quiz</a>
+            <a href="resources.html" class="block rounded-2xl border border-slate-200 px-4 py-3 hover:border-slate-400">Resources</a>
+            <a href="lesson-intro.html" class="block rounded-2xl border border-slate-200 px-4 py-3 hover:border-slate-400">Lesson overview</a>
+        </nav>
+        <button type="button" id="drawer-logout" class="mt-8 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-50">Log out</button>
+    </div>
+</div>
+
+<script src="assets/js/cyberlearn.js"></script>
+<script src="assets/js/session-timeout.js"></script>
+
+<script>
+    if (!window.CyberLearn || !window.CyberLearn.getActiveUser()) {
+        document.body.innerHTML = '<div style="position:fixed;inset:0;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:9999;"><div style="background:white;padding:3rem;border-radius:1.5rem;max-width:400px;text-align:center;box-shadow:0 25px 50px rgba(0,0,0,0.3);"><h2 style="font-size:1.5rem;font-weight:600;margin-bottom:1rem;color:#0f172a;">Access Denied</h2><p style="color:#475569;margin-bottom:1.5rem;">You must be logged in to access learning resources.</p><p style="font-size:0.875rem;color:#94a3b8;">Redirecting to login...</p></div></div>';
+        setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+    }
+</script>
+<script>
+    (function () {
+        const quizPanel = document.getElementById('quiz-panel');
+        const quizResults = document.getElementById('quiz-results');
+        const quizIntro = document.getElementById('quiz-intro');
+        const introStart = document.getElementById('intro-start');
+        const introClose = document.getElementById('intro-close');
+        const questionCount = document.getElementById('question-count');
+        const questionCategory = document.getElementById('question-category');
+        const questionText = document.getElementById('question-text');
+        const questionSubtext = document.getElementById('question-subtext');
+        const questionVisual = document.getElementById('question-visual');
+        const questionProgress = document.getElementById('question-progress');
+        const optionsGrid = document.getElementById('options-grid');
+        const optionFeedback = document.getElementById('option-feedback');
+        const nextButton = document.getElementById('next-question');
+        const retryButton = document.getElementById('retry-quiz');
+        const scoreHeading = document.getElementById('score-heading');
+        const scoreMessage = document.getElementById('score-message');
+        const quizMenu = document.getElementById('quiz-menu');
+        const quizUserPill = document.getElementById('quiz-user-pill');
+        const drawer = document.getElementById('quiz-drawer');
+        const drawerClose = document.getElementById('drawer-close');
+        const drawerLogout = document.getElementById('drawer-logout');
+
+        const resultBars = {
+            'Password Security': { bar: document.getElementById('bar-password'), label: document.getElementById('label-password'), correct: 0, total: 0 },
+            'Data Protection': { bar: document.getElementById('bar-data'), label: document.getElementById('label-data'), correct: 0, total: 0 },
+            'Incident Response': { bar: document.getElementById('bar-incident'), label: document.getElementById('label-incident'), correct: 0, total: 0 }
+        };
+
+        const QUIZ_SETS = [
+            [
+                {
+                    text: 'An email warns that your online banking will lock unless you click a link now.',
+                    subtext: 'The sender is "security-team@bank-safe-alert.com".',
+                    visual: 'Inbox alert',
+                    category: 'Data Protection',
+                    options: [
+                        'Click the link and log in quickly.',
+                        'Delete the email and phone the bank using the number on your card.',
+                        'Forward the email to all of your contacts.',
+                        'Reply asking if the message is real.'
+                    ],
+                    correctIndex: 1,
+                    feedback: 'Use trusted contact details only. Suspicious emails should be deleted and reported.'
+                },
+                {
+                    text: 'You need a new password for a charity website.',
+                    subtext: 'Two ideas come to mind.',
+                    visual: 'Password pad',
+                    category: 'Password Security',
+                    options: [
+                        'Use your house number and street name.',
+                        'Use your birthday with an exclamation mark.',
+                        'Use three random words plus numbers and a symbol.',
+                        'Reuse the password from another site.'
+                    ],
+                    correctIndex: 2,
+                    feedback: 'Random words with numbers and symbols are stronger and easier to remember.'
+                },
+                {
+                    text: 'A pop-up says “Virus detected! Call 0800-111-999 immediately”.',
+                    subtext: 'The page will not close unless you press “OK”.',
+                    visual: 'Pop-up window',
+                    category: 'Incident Response',
+                    options: [
+                        'Call the number so they can help.',
+                        'Press OK to make the pop-up disappear.',
+                        'Restart your device or close the browser, then run your own antivirus scan.',
+                        'Give the caller remote access to fix it.'
+                    ],
+                    correctIndex: 2,
+                    feedback: 'Close the window yourself or restart. Legitimate support never appears through pop-up phone numbers.'
+                },
+                {
+                    text: 'A WhatsApp message from an unknown number claims to be your grandson needing emergency money.',
+                    subtext: 'They want a bank transfer right away.',
+                    visual: 'Chat bubbles',
+                    category: 'Incident Response',
+                    options: [
+                        'Send the money immediately to help.',
+                        'Call a known number for your grandson or another family member to confirm.',
+                        'Reply with your card details so they can charge it.',
+                        'Share the message on social media.'
+                    ],
+                    correctIndex: 1,
+                    feedback: 'Always verify urgent requests using contact details you already trust.'
+                },
+                {
+                    text: 'You are shopping online using public Wi-Fi and the site does not show a padlock.',
+                    subtext: 'The deal ends tonight.',
+                    visual: 'Shopping cart',
+                    category: 'Data Protection',
+                    options: [
+                        'Continue anyway before it sells out.',
+                        'Wait until you get home to use secure Wi-Fi.',
+                        'Enter half of your card number now, half later.',
+                        'Send your card details via email instead.'
+                    ],
+                    correctIndex: 1,
+                    feedback: 'Only enter payment details on secure connections. Deals are not worth the risk.'
+                }
+            ],
+            [
+                {
+                    text: 'You receive an email saying you have won a supermarket voucher.',
+                    subtext: 'It asks you to click a link and enter your bank details to claim.',
+                    visual: 'Prize email',
+                    category: 'Data Protection',
+                    options: [
+                        'Click the link and fill in your account details.',
+                        'Delete the email or report it as spam.',
+                        'Reply with your name and address only.',
+                        'Forward it to friends so they can claim too.'
+                    ],
+                    correctIndex: 1,
+                    feedback: 'Legitimate prizes never ask for bank details by email. Delete or report it.'
+                },
+                {
+                    text: 'You are creating a password for online banking.',
+                    subtext: 'You want something strong but memorable.',
+                    visual: 'Lock and key',
+                    category: 'Password Security',
+                    options: [
+                        'Use the name of your pet.',
+                        'Use a phrase like "BlueTrain!45Garden" that only you would know.',
+                        'Use “password123” so it’s easy to remember.',
+                        'Use your phone number backwards.'
+                    ],
+                    correctIndex: 1,
+                    feedback: 'Long passphrases with a mix of words, numbers and symbols are far stronger.'
+                },
+                {
+                    text: 'A caller says they are from your internet provider.',
+                    subtext: 'They ask you to install software so they can “fix your connection”.',
+                    visual: 'Phone icon',
+                    category: 'Incident Response',
+                    options: [
+                        'Install the software while they are on the phone.',
+                        'Ask for their full name and employee number, then install it.',
+                        'Hang up and contact your provider using the official number.',
+                        'Give them remote access to save time.'
+                    ],
+                    correctIndex: 2,
+                    feedback: 'Always use official contact details. Unsolicited offers of remote support are risky.'
+                },
+                {
+                    text: 'Your email password is “Summer2024!” and you use it everywhere.',
+                    subtext: 'You have not changed it in years.',
+                    visual: 'Email inbox',
+                    category: 'Password Security',
+                    options: [
+                        'Keep it the same; it has numbers and a symbol.',
+                        'Share it with a family member in case you forget.',
+                        'Change it on the most important sites but keep it elsewhere.',
+                        'Create different strong passwords or use a password manager.'
+                    ],
+                    correctIndex: 3,
+                    feedback: 'Reusing passwords is dangerous. Unique passwords or a manager are much safer.'
+                },
+                {
+                    text: 'You receive a letter saying your details may have been part of a data breach.',
+                    subtext: 'It advises you to “stay alert”.',
+                    visual: 'Letter icon',
+                    category: 'Data Protection',
+                    options: [
+                        'Ignore it; it’s probably a mistake.',
+                        'Tell everyone on social media about the breach.',
+                        'Change your passwords and watch for unusual account activity.',
+                        'Throw the letter away immediately.'
+                    ],
+                    correctIndex: 2,
+                    feedback: 'Changing passwords and monitoring accounts reduces the impact of a breach.'
+                }
+            ],
+            [
+                {
+                    text: 'You see a social media post offering cheap concert tickets if you pay by bank transfer.',
+                    subtext: 'The account has only existed for a week.',
+                    visual: 'Concert poster',
+                    category: 'Data Protection',
+                    options: [
+                        'Pay by bank transfer before the tickets sell out.',
+                        'Ask if you can pay with a credit card or through a trusted site.',
+                        'Send your card details in a private message.',
+                        'Give them your online banking login to speed things up.'
+                    ],
+                    correctIndex: 1,
+                    feedback: 'Using secure payment methods gives you more protection if something goes wrong.'
+                },
+                {
+                    text: 'A family member asks for your Netflix password so they can watch a film.',
+                    subtext: 'You also use that password for your email.',
+                    visual: 'TV remote',
+                    category: 'Password Security',
+                    options: [
+                        'Share the password; they are family.',
+                        'Change the password to something new and share that instead.',
+                        'Create a new strong password and don’t reuse it for other sites.',
+                        'Write the password on paper and post it to them.'
+                    ],
+                    correctIndex: 2,
+                    feedback: 'Never share a password that unlocks more important accounts like email.'
+                },
+                {
+                    text: 'Your laptop shows a message: “Important security update available”.',
+                    subtext: 'You are busy and tempted to click “Remind me later” for the tenth time.',
+                    visual: 'Laptop update icon',
+                    category: 'Incident Response',
+                    options: [
+                        'Ignore it; your laptop still works.',
+                        'Turn the laptop off instead.',
+                        'Install the update when you have a moment.',
+                        'Uninstall your antivirus because it keeps nagging you.'
+                    ],
+                    correctIndex: 2,
+                    feedback: 'Updates patch security holes and keep your device safer.'
+                },
+                {
+                    text: 'You receive an unexpected email attachment from a colleague.',
+                    subtext: 'The message is very short and simply says “See attached”.',
+                    visual: 'Attachment icon',
+                    category: 'Data Protection',
+                    options: [
+                        'Open the attachment straight away.',
+                        'Reply asking if they really sent it before opening.',
+                        'Forward it to another colleague to check.',
+                        'Save it and open it on a different device.'
+                    ],
+                    correctIndex: 1,
+                    feedback: 'Always confirm unexpected attachments before opening them.'
+                },
+                {
+                    text: 'A pop-up appears while browsing, claiming your device is infected and asking you to download “CleanFast Pro”.',
+                    subtext: 'It flashes red and makes an alarm sound.',
+                    visual: 'Warning triangle',
+                    category: 'Incident Response',
+                    options: [
+                        'Download and install CleanFast Pro immediately.',
+                        'Close the browser or restart your device, then run your own antivirus.',
+                        'Ignore the pop-up but leave it open in the background.',
+                        'Call the phone number shown on the pop-up.'
+                    ],
+                    correctIndex: 1,
+                    feedback: 'Use security tools you installed yourself, not those pushed by pop-ups.'
+                }
+            ],
+            [
+                {
+                    text: 'Your bank sends a text saying: “We noticed a new login. If this wasn’t you, click here: http://secure-bank-check.com”.',
+                    subtext: 'You were not expecting a message.',
+                    visual: 'SMS bubble',
+                    category: 'Data Protection',
+                    options: [
+                        'Click the link and enter your banking details.',
+                        'Delete the message and call the bank using the number on your card.',
+                        'Reply with your full card number to check.',
+                        'Forward the text to friends as a warning.'
+                    ],
+                    correctIndex: 1,
+                    feedback: 'Use official contact routes, not links in unexpected messages.'
+                },
+                {
+                    text: 'You want a password that is easy to type on your phone.',
+                    subtext: 'You consider “1234Abcd!” for everything.',
+                    visual: 'Phone keyboard',
+                    category: 'Password Security',
+                    options: [
+                        'Use “1234Abcd!” on all accounts.',
+                        'Use a longer passphrase like “RedBus!StoneRiver82”.',
+                        'Use only lowercase letters to type faster.',
+                        'Use your name plus the current year.'
+                    ],
+                    correctIndex: 1,
+                    feedback: 'A long passphrase with a mix of characters is still easy to type but much stronger.'
+                },
+                {
+                    text: 'You accidentally send an email with the wrong attachment to a stranger.',
+                    subtext: 'It includes some personal information.',
+                    visual: 'Sent mail',
+                    category: 'Incident Response',
+                    options: [
+                        'Do nothing and hope they ignore it.',
+                        'Email them again, politely asking them to delete it.',
+                        'Post on social media to apologise.',
+                        'Send them more information to explain the mistake.'
+                    ],
+                    correctIndex: 1,
+                    feedback: 'Contact them and ask for deletion. For sensitive data, you may also need to inform your organisation.'
+                },
+                {
+                    text: 'A website offers a “free security scan” if you enter your email and password.',
+                    subtext: 'The design looks basic and has spelling mistakes.',
+                    visual: 'Simple web page',
+                    category: 'Data Protection',
+                    options: [
+                        'Enter your details since the scan is free.',
+                        'Use a fake email and real password.',
+                        'Close the site and ignore the offer.',
+                        'Bookmark the page for later.'
+                    ],
+                    correctIndex: 2,
+                    feedback: 'Legitimate security tools don’t ask for your password on random sites.'
+                },
+                {
+                    text: 'Your friend messages you saying “Is this you in this video?” with a strange link.',
+                    subtext: 'The message does not sound like them.',
+                    visual: 'Chat app',
+                    category: 'Incident Response',
+                    options: [
+                        'Click the link to check the video.',
+                        'Ask them in a separate message if they really sent it.',
+                        'Forward the link to everyone so they are aware.',
+                        'Log in on the page that opens to see more.'
+                    ],
+                    correctIndex: 1,
+                    feedback: 'Always confirm surprising messages using another channel before clicking links.'
+                }
+            ],
+            [
+                {
+                    text: 'You are filling in an online form for a free prize draw.',
+                    subtext: 'It asks for your full date of birth and home address.',
+                    visual: 'Online form',
+                    category: 'Data Protection',
+                    options: [
+                        'Provide all the details to increase your chances.',
+                        'Only provide information you are comfortable sharing and check the site is trustworthy.',
+                        'Enter false details but use your real email and phone number.',
+                        'Give extra details so they can contact you more easily.'
+                    ],
+                    correctIndex: 1,
+                    feedback: 'Share only what is necessary and only with trusted organisations.'
+                },
+                {
+                    text: 'You currently use short passwords like “qwerty5!” on most websites.',
+                    subtext: 'You want to improve your security.',
+                    visual: 'Keyboard',
+                    category: 'Password Security',
+                    options: [
+                        'Keep the same passwords but change them every month.',
+                        'Switch to longer passphrases and avoid reusing them.',
+                        'Write all passwords on a sticky note near your computer.',
+                        'Use your car registration plus a symbol everywhere.'
+                    ],
+                    correctIndex: 1,
+                    feedback: 'Long, unique passphrases or a password manager greatly increase your safety.'
+                },
+                {
+                    text: 'You receive an email that looks like it is from your workplace IT team, asking for your login details to “run checks”.',
+                    subtext: 'The message feels slightly unusual.',
+                    visual: 'Office email',
+                    category: 'Incident Response',
+                    options: [
+                        'Reply with your username and password.',
+                        'Click the link and sign in to prove who you are.',
+                        'Phone the IT team using a known number to confirm.',
+                        'Forward the email to everyone in your office.'
+                    ],
+                    correctIndex: 2,
+                    feedback: 'Internal teams will not ask for your password over email.'
+                },
+                {
+                    text: 'On a public computer in a library, you are tempted to log in to your online banking.',
+                    subtext: 'You are in a hurry.',
+                    visual: 'Public PC',
+                    category: 'Data Protection',
+                    options: [
+                        'Log in and log out quickly when finished.',
+                        'Use private browsing and log in anyway.',
+                        'Avoid online banking on public computers. Wait or use your own device.',
+                        'Save your password in the browser to make it faster next time.'
+                    ],
+                    correctIndex: 2,
+                    feedback: 'Public computers can be monitored or infected. Use trusted devices for sensitive tasks.'
+                },
+                {
+                    text: 'Your antivirus program has expired and is asking you to renew.',
+                    subtext: 'You are not sure if it is important.',
+                    visual: 'Shield icon',
+                    category: 'Incident Response',
+                    options: [
+                        'Uninstall it; you do not need protection.',
+                        'Ignore the messages permanently.',
+                        'Renew or replace it with a reputable security product.',
+                        'Turn off your internet instead.'
+                    ],
+                    correctIndex: 2,
+                    feedback: 'Up-to-date security software is an important layer of defence.'
+                }
+            ]
+        ];
+
+        const QUIZ_STATE_KEY = 'cyberlearn_finalquiz_state_v1';
+
+        function loadQuizStateMap() {
+            try {
+                const raw = localStorage.getItem(QUIZ_STATE_KEY);
+                return raw ? JSON.parse(raw) : {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function loadQuizState(emailKey) {
+            const all = loadQuizStateMap();
+            return all[emailKey] || { nextSetIndex: 0 };
+        }
+
+        function saveQuizState(emailKey, state) {
+            const all = loadQuizStateMap();
+            all[emailKey] = state;
+            localStorage.setItem(QUIZ_STATE_KEY, JSON.stringify(all));
+        }
+
+        const activeUser = window.CyberLearn.getActiveUser();
+        const userKey = (activeUser && activeUser.email ? activeUser.email.toLowerCase() : '__guest__');
+
+        let quizState = loadQuizState(userKey);
+        let quizSetIndex = quizState.nextSetIndex || 0;
+        if (quizSetIndex < 0 || quizSetIndex >= QUIZ_SETS.length) {
+            quizSetIndex = 0;
+        }
+        const quizData = QUIZ_SETS[quizSetIndex];
+
+        let currentIndex = 0;
+        let score = 0;
+
+        Object.values(resultBars).forEach((bar) => {
+            bar.correct = 0;
+            bar.total = 0;
+        });
+
+        const user = activeUser;
+        if (user && quizUserPill) {
+            quizUserPill.textContent = window.CyberLearn.formatInitials(user.name, user.email);
+        }
+
+        function openDrawer() {
+            if (drawer) drawer.classList.remove('hidden');
+        }
+
+        function closeDrawer() {
+            if (drawer) drawer.classList.add('hidden');
+        }
+
+        if (quizMenu) {
+            quizMenu.addEventListener('click', openDrawer);
+        }
+
+        if (drawerClose) {
+            drawerClose.addEventListener('click', closeDrawer);
+        }
+
+        if (drawer) {
+            drawer.addEventListener('click', (event) => {
+                if (event.target === drawer) {
+                    closeDrawer();
+                }
+            });
+        }
+
+        if (drawerLogout) {
+            drawerLogout.addEventListener('click', () => {
+                window.CyberLearn.logout();
+                closeDrawer();
+                window.location.href = 'index.html';
+            });
+        }
+
+        function showQuestion(index) {
+            const question = quizData[index];
+            questionCount.textContent = `Question ${index + 1} of ${quizData.length}`;
+            questionCategory.textContent = question.category;
+            questionText.textContent = question.text;
+            questionSubtext.textContent = question.subtext;
+            questionVisual.textContent = question.visual;
+            questionProgress.style.width = `${(index / quizData.length) * 100}%`;
+
+            optionsGrid.innerHTML = '';
+            optionFeedback.classList.add('hidden');
+            nextButton.classList.add('hidden');
+
+            question.options.forEach((option, optionIndex) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'option-btn';
+                button.dataset.index = optionIndex;
+                button.innerHTML = `
+                    <div class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-900">Option ${String.fromCharCode(65 + optionIndex)}</div>
+                    <p class="mt-2 text-base text-slate-900">${option}</p>
+                `;
+                button.addEventListener('click', () =>
+                    selectOption(button, question.correctIndex, question.feedback, question.category)
+                );
+                optionsGrid.appendChild(button);
+            });
+        }
+
+        function selectOption(button, correctIndex, feedback, category) {
+            const chosenIndex = Number(button.dataset.index);
+            const buttons = optionsGrid.querySelectorAll('.option-btn');
+            buttons.forEach((btn) => {
+                btn.disabled = true;
+                if (Number(btn.dataset.index) === correctIndex) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (chosenIndex === correctIndex) {
+                score += 1;
+                button.classList.add('correct');
+                optionFeedback.textContent = `Great! ${feedback}`;
+                resultBars[category].correct += 1;
+            } else {
+                button.classList.add('incorrect');
+                optionFeedback.textContent = `Not quite. ${feedback}`;
+            }
+
+            resultBars[category].total += 1;
+            optionFeedback.classList.remove('hidden');
+            nextButton.textContent = currentIndex === quizData.length - 1 ? 'View results' : 'Next question';
+            nextButton.classList.remove('hidden');
+        }
+
+        function markQuizCompletedForNextTime() {
+            quizState.nextSetIndex = (quizSetIndex + 1) % QUIZ_SETS.length;
+            saveQuizState(userKey, quizState);
+        }
+
+        function showResults() {
+            quizPanel.classList.add('hidden');
+            quizResults.classList.remove('hidden');
+            questionProgress.style.width = '100%';
+            scoreHeading.textContent = `You scored ${score}/${quizData.length}`;
+            const percent = Math.round((score / quizData.length) * 100);
+            scoreMessage.textContent = percent === 100
+                ? 'Perfect! You are ready for anything.'
+                : 'Review your results below and revisit any lesson cards you need.';
+
+            Object.entries(resultBars).forEach(([category, data]) => {
+                const ratio = data.total ? Math.round((data.correct / data.total) * 100) : 0;
+                data.bar.style.width = `${ratio}%`;
+                data.label.textContent = `${ratio}%`;
+            });
+
+            markQuizCompletedForNextTime();
+        }
+
+        function startQuiz() {
+            quizIntro.classList.add('hidden');
+            quizPanel.classList.remove('hidden');
+            quizResults.classList.add('hidden');
+            currentIndex = 0;
+            score = 0;
+            Object.values(resultBars).forEach((bar) => {
+                bar.correct = 0;
+                bar.total = 0;
+                bar.bar.style.width = '0';
+                bar.label.textContent = '0%';
+            });
+            showQuestion(currentIndex);
+        }
+
+        nextButton.addEventListener('click', () => {
+            currentIndex += 1;
+            if (currentIndex < quizData.length) {
+                showQuestion(currentIndex);
+            } else {
+                showResults();
+            }
+        });
+
+        if (retryButton) {
+            retryButton.addEventListener('click', () => {
+                currentIndex = 0;
+                score = 0;
+                quizResults.classList.add('hidden');
+                quizPanel.classList.remove('hidden');
+                Object.values(resultBars).forEach((bar) => {
+                    bar.correct = 0;
+                    bar.total = 0;
+                    bar.bar.style.width = '0';
+                    bar.label.textContent = '0%';
+                });
+                showQuestion(currentIndex);
+            });
+        }
+
+        introStart.addEventListener('click', startQuiz);
+        introClose.addEventListener('click', () => quizIntro.classList.add('hidden'));
+
+        if (!window.CyberLearn.getProgress().quizUnlocked) {
+            scoreMessage.textContent = 'Complete all lessons first. You can still preview the quiz layout.';
+        }
+
+        const quizDrawer = document.getElementById('quiz-drawer');
+        const quizHeaderMenu = document.getElementById('quiz-header-menu');
+        const quizDrawerClose = document.getElementById('quiz-drawer-close');
+        const quizDrawerLogout = document.getElementById('quiz-drawer-logout');
+        const quizMenuLink = document.querySelector('#quiz-drawer a[href="quiz.html"]');
+
+        function openQuizDrawer() {
+            if (quizDrawer) quizDrawer.classList.remove('hidden');
+        }
+
+        function closeQuizDrawer() {
+            if (quizDrawer) quizDrawer.classList.add('hidden');
+        }
+
+        if (quizHeaderMenu) {
+            quizHeaderMenu.addEventListener('click', openQuizDrawer);
+        }
+
+        if (quizDrawerClose) {
+            quizDrawerClose.addEventListener('click', closeQuizDrawer);
+        }
+
+        if (quizDrawer) {
+            quizDrawer.addEventListener('click', (event) => {
+                if (event.target === quizDrawer) {
+                    closeQuizDrawer();
+                }
+            });
+        }
+
+        if (quizMenuLink) {
+            quizMenuLink.addEventListener('click', (event) => {
+                const progress = window.CyberLearn.getProgress();
+                const lessonsProgress = progress.lessons || {};
+                const allLessonsComplete = window.CyberLearn.LESSON_IDS.every((id) => (lessonsProgress[id] || 0) >= 100);
+                
+                if (!allLessonsComplete) {
+                    event.preventDefault();
+                    alert('Please complete all lessons first before taking the quiz.');
+                    closeQuizDrawer();
+                    return false;
+                }
+            });
+        }
+
+        if (quizDrawerLogout) {
+            quizDrawerLogout.addEventListener('click', () => {
+                if (window.CyberLearn && window.CyberLearn.logout) {
+                    window.CyberLearn.logout();
+                }
+                closeQuizDrawer();
+                window.location.href = 'landing.html';
+            });
+        }
+    })();
+</script>
+
+<footer class="max-w-6xl mx-auto px-6 py-8 mt-12 border-t border-slate-200/70">
+    <div class="flex items-center justify-between text-sm text-slate-900">
+        <p>&copy; 2025 CyberLearn. All rights reserved.</p>
+        <a href="policy.html" class="hover:underline font-medium">Policy</a>
+    </div>
+</footer>
+
+<div id="quiz-drawer" class="fixed inset-0 z-50 hidden bg-slate-900/50 px-6 py-10">
+    <div class="drawer-enter max-w-sm rounded-3xl bg-white p-8 shadow-2xl">
+        <div class="flex items-center justify-between mb-6">
+            <button type="button" id="quiz-drawer-close" class="text-2xl text-slate-800 hover:text-slate-900" aria-label="Close menu">&times;</button>
+        </div>
+        <nav class="space-y-3 text-sm font-semibold text-slate-900">
+            <a href="dashboard.html" class="block rounded-2xl border border-slate-200 px-4 py-3 hover:border-slate-400">Dashboard</a>
+            <a href="lessons.html" class="block rounded-2xl border border-slate-200 px-4 py-3 hover:border-slate-400">Lessons</a>
+            <a href="quiz.html" class="block rounded-2xl border border-slate-200 px-4 py-3 hover:border-slate-400">Quiz</a>
+            <a href="resources.html" class="block rounded-2xl border border-slate-200 px-4 py-3 hover:border-slate-400">Resources</a>
+        </nav>
+        <button type="button" id="quiz-drawer-logout" class="mt-8 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-50">Log out</button>
+    </div>
+</div>
+
+</body>
+</html>
